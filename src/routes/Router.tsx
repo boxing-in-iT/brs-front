@@ -17,7 +17,7 @@ const ROUTES = [
 
 const AppRoutes: FC = () => {
   const refreshToken = Cookies.get(AUTH_REFRESH_TOKEN);
-  const skip = !refreshToken || isTokenExpired(refreshToken);
+  // const skip = !refreshToken || isTokenExpired(refreshToken);
 
   const location = useLocation();
   const authPage = [PATHNAMES.LOGIN];
