@@ -7,11 +7,26 @@ import { HomePage } from "../pages/HomePage";
 import { useLocation, useRoutes } from "react-router-dom";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
+import { LoginPage } from "../pages/Login";
+import { BookPage } from "../pages/BookPage";
+import { GetRecommendationsPage } from "../pages/GetRecommendationsPage";
 
 const ROUTES = [
   {
     element: <HomePage />,
     path: PATHNAMES.HOME,
+  },
+  {
+    element: <LoginPage />,
+    path: PATHNAMES.LOGIN,
+  },
+  {
+    element: <BookPage />,
+    path: `${PATHNAMES.BOOK}`,
+  },
+  {
+    element: <GetRecommendationsPage />,
+    path: `${PATHNAMES.GET_RECOMMENDATIONS}`,
   },
 ];
 

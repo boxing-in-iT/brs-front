@@ -1,15 +1,24 @@
 export interface Book {
-  id: string;
+  id: number;
+  isbn13: string;
+  isbn10: string;
   title: string;
-  author: string;
-  rating: number;
-  description: string;
-  coverImage: string;
-  genre: string;
+  subtitle: string | null;
+  authors?: string;
+  description?: string;
+  categories?: string;
+  thumbnail?: string;
+  [key: string]: any; // на случай дополнительных полей
 }
 
 export interface FilterOptions {
   genre: string;
   author: string;
   rating: number;
+}
+
+export interface Image {
+  id: number;
+  path: string;
+  src?: string;
 }

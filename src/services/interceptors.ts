@@ -69,9 +69,9 @@ const fetchAccessToken = async () => {
 
   try {
     const { data } = await axios.post<{ access: string }>(
-      "http://127.0.0.1:8000/api/refresh/",
+      "http://127.0.0.1:3000/refresh/",
       { refresh },
-      { baseURL: "http://127.0.0.1:8000/api/" }
+      { baseURL: "http://127.0.0.1:3000/" }
     );
     return data.access;
   } catch (error) {
