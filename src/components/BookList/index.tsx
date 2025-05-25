@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import useBookStore from "../../store/books-store";
 import BookCard from "../BookCard";
 import Pagination from "../Pagination";
@@ -25,7 +25,6 @@ const BookList = () => {
 
   const [currentPage, setCurrentPage] = useState(1);
 
-  // Локальные фильтры для UI
   const [localSearch, setLocalSearch] = useState("");
   const [localAuthor, setLocalAuthor] = useState("");
   const [localCategory, setLocalCategory] = useState("All");
@@ -151,7 +150,8 @@ const BookList = () => {
           </div>
 
           <Pagination
-            currentPage={books.page}
+            // currentPage={books.page}
+            currentPage={currentPage}
             totalPages={books.totalPages}
             onPageChange={fetchBooks}
           />

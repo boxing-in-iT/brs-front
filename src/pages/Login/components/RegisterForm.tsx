@@ -1,6 +1,6 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import useAuthStore from "../../../store/auth-store";
-import { useNavigate } from "react-router-dom";
+
 import { Form, FormikConfig, FormikProvider, useFormik } from "formik";
 import { IRegisterFormikValues } from "./types";
 import { REGISTER_FORM_FIELDS, REGISTER_INITIAL_VALUES } from "./constants";
@@ -16,8 +16,6 @@ interface Props {
 export const RegistrationForm: FC<Props> = ({ setActiveForm }) => {
   const register = useAuthStore((state) => state.register);
 
-  const navigate = useNavigate(); // Инициализируем navigate
-
   const formikProps: FormikConfig<IRegisterFormikValues> = {
     initialValues: REGISTER_INITIAL_VALUES,
     // validationSchema: AUTH_FORM_VALIDATION_SCHEMA,
@@ -30,6 +28,8 @@ export const RegistrationForm: FC<Props> = ({ setActiveForm }) => {
         const response = await register(fullValues, () => {
           setActiveForm("login");
         });
+
+        console.log(response);
 
         // formik.resetForm();
       } catch (err) {

@@ -3,8 +3,9 @@ import { ReactNode, MouseEventHandler, FC, memo } from "react";
 import cn from "classnames";
 
 import { ButtonVariants } from "./types";
-import { Sizes } from "../../../@types/sizes";
+
 import { BUTTON_STYLE_SIZE, BUTTON_STYLE_VARIANTS } from "./constants";
+import { Sizes } from "../../@types/sizes";
 
 interface Props {
   children: ReactNode;
@@ -26,7 +27,7 @@ export const Button: FC<Props> = memo(
     variant,
     size,
     type,
-    leaderSize,
+
     isDisabled,
     onClick,
   }) => {

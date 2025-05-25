@@ -1,4 +1,4 @@
-import React, { FC, useState, KeyboardEvent } from "react";
+import { FC, useState, KeyboardEvent } from "react";
 import { useField, useFormikContext } from "formik";
 import cn from "classnames";
 

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { ArrowRight, Search } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 // Sample book data
 const books = [

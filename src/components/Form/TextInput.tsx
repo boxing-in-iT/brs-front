@@ -1,11 +1,8 @@
-import React, { FC, KeyboardEvent, useMemo } from "react";
-
+import { FC, KeyboardEvent } from "react";
 import cn from "classnames";
 import { useField, useFormikContext } from "formik";
 
 import { TEXT_INPUT_STYLE_VARIANTS } from "./constants";
-import { InputMask as MaskedInput } from "react-input-mask";
-
 import { FormFieldVariants } from "./types";
 import { FormField } from ".";
 import { IFormField } from "../../@types/form";
@@ -56,23 +53,8 @@ export const TextInput: FC<IFormField> = ({
 
   const isTelField = type === "tel";
 
-  const InputComponent = useMemo(() => {
-    if (isTelField) {
-      return PhoneInput;
-    }
-    if (mask) {
-      return MaskedInput;
-    }
-    if (isTextArea) {
-      return "textarea";
-    }
-    return "input";
-  }, [mask, isTextArea, isTelField]);
-
   const onChangePhoneValue = (inputValue: string | undefined) => {
-    if (inputValue) {
-      setValue(inputValue);
-    }
+    setValue(inputValue || "");
   };
 
   const textareaProps = isTextArea
@@ -89,7 +71,7 @@ export const TextInput: FC<IFormField> = ({
     className: combinedClassNames,
     value: value || "",
     placeholder,
-    onChange: isTelField ? onChangePhoneValue : onChange,
+    onChange: isTelField ? undefined : onChange,
     onKeyDown: onKeyDownEnter,
     maxLength: isTelField ? 20 : maxLength,
     minLength,
@@ -99,7 +81,21 @@ export const TextInput: FC<IFormField> = ({
     ...field,
     ...props,
     ...textareaProps,
-    ...(mask && { mask }), // передаем маску только для MaskedInput
+    ...(mask && { mask }),
+  };
+
+  const phoneInputProps = {
+    id: fieldId,
+    className: combinedClassNames,
+    value: value || "",
+    placeholder,
+    onChange: onChangePhoneValue,
+    onKeyDown: onKeyDownEnter,
+    maxLength: 20,
+    required,
+    autoComplete,
+    disabled,
+    name: field.name,
   };
 
   return (
@@ -112,7 +108,13 @@ export const TextInput: FC<IFormField> = ({
       isShownError={isShownError}
       error={error}
     >
-      <InputComponent {...inputProps} />
+      {isTelField ? (
+        <PhoneInput {...phoneInputProps} />
+      ) : isTextArea ? (
+        <textarea {...inputProps} />
+      ) : (
+        <input {...inputProps} />
+      )}
     </FormField>
   );
 };

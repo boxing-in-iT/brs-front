@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import cn from "classnames";
 
 import { FORM_FIELD_STYLE_VARIANTS } from "./constants";
@@ -24,21 +24,20 @@ export const FormField: FC<Props> = ({
   variant,
   label,
   labelFor,
-  isShownError,
-  error,
 }) => {
   const combinedClassNames = cn(
     "relative w-full",
-    FORM_FIELD_STYLE_VARIANTS[variant],
+    variant ? FORM_FIELD_STYLE_VARIANTS[variant] : "", // Fallback to empty string if undefined
     className,
     { "flex flex-col gap-1.5": label }
   );
-
   return (
     <div className={combinedClassNames}>
-      <Label className={labelClassName} variant={variant} htmlFor={labelFor}>
-        {label}
-      </Label>
+      {label && (
+        <Label className={labelClassName} variant={variant} htmlFor={labelFor}>
+          {label}
+        </Label>
+      )}
       {children}
       {/* <Error isShownError={isShownError}>{error}</Error> */}
     </div>

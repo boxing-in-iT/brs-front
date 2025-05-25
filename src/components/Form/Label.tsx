@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import cn from "classnames";
 import { LABEL_STYLE_VARIANTS } from "./constants";
 import { FormFieldVariants } from "./types";

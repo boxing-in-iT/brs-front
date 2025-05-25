@@ -15,27 +15,9 @@ export interface Book {
   [key: string]: any;
 }
 
-// Мок книги для демонстрации
-const mockBooks: Book[] = [
-  {
-    id: 1,
-    isbn13: "9781234567897",
-    isbn10: "1234567890",
-    title: "React для профессионалов",
-    subtitle: "Глубокое погружение в React и TypeScript",
-    authors: "Иван Иванов, Петр Петров",
-    description:
-      "Это подробное руководство по React и TypeScript поможет вам создавать мощные и масштабируемые приложения.",
-    categories: "Программирование, Веб-разработка",
-    thumbnail:
-      "https://images-na.ssl-images-amazon.com/images/I/51v5ZpFyaFL._SX379_BO1,204,203,200_.jpg",
-  },
-  // можно добавить ещё книги
-];
-
 export const BookPage: React.FC = () => {
   const { id } = useParams();
-  const { detailBook, isLoading, getDetailBook } = useBookStore();
+  const { detailBook, getDetailBook } = useBookStore();
 
   useEffect(() => {
     if (id) {

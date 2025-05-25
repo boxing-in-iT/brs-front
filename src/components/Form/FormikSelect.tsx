@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import { FC } from "react";
 import cn from "classnames";
 import { useField } from "formik";
 import { FormFieldVariants } from "./types";
@@ -42,9 +42,6 @@ export const SelectInput: FC<ISelectInputProps> = ({
     TEXT_INPUT_STYLE_VARIANTS[variant],
     className
   );
-
-  // Используем значения и обработчики из Formik
-  const hasError = meta.touched && meta.error;
 
   return (
     <FormField
