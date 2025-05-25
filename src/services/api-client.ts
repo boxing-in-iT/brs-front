@@ -4,7 +4,7 @@ import { addAccessToken, updateAccessToken } from "./interceptors";
 
 export const instance = axios.create({
   // baseURL: process.env.REACT_APP_API_URL,
-  baseURL: "https://nestjs-brs-back.onrender.com/",
+  baseURL: "https://nestjs-brs-back-production.up.railway.app/",
 });
 
 // const RETRY_COUNT = 3;
