@@ -85,7 +85,7 @@ const BookList = () => {
             type="text"
             value={localSearch}
             onChange={(e) => setLocalSearch(e.target.value)}
-            placeholder="Поиск книги..."
+            placeholder="Пошук книги..."
             className="w-full mb-4 px-3 py-2 border rounded-md"
           />
 
@@ -127,10 +127,10 @@ const BookList = () => {
                 )
               }
             >
-              <option value="title:ASC">Название (по возрастанию)</option>
-              <option value="title:DESC">Название (по убыванию)</option>
-              <option value="rating:ASC">Рейтинг (по возрастанию)</option>
-              <option value="rating:DESC">Рейтинг (по убыванию)</option>
+              <option value="title:ASC">Назва (за зростанням)</option>
+              <option value="title:DESC">Назва (за спаданням)</option>
+              <option value="rating:ASC">Рейтинг (за зростанням)</option>
+              <option value="rating:DESC">Рейтинг (за спаданням)</option>
             </select>
           </div>
 

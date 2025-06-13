@@ -3,4 +3,5 @@ export const PATHNAMES = {
   BOOK: "/book/:id",
   HOME: "/",
   GET_RECOMMENDATIONS: "/get-recommendations",
+  PROFILE: "/profile",
 };

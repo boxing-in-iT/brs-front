@@ -27,6 +27,8 @@ interface IBookStore {
   isLoading: boolean;
   books: BookListResponse;
   detailBook: any;
+  recommendations: any;
+  personalRecommendations: any;
   getBooks: (params?: {
     page?: number;
     limit?: number;
@@ -36,11 +38,15 @@ interface IBookStore {
     sort?: "title:ASC" | "title:DESC" | "rating:ASC" | "rating:DESC";
   }) => Promise<void>;
   getDetailBook: (id: string) => Promise<void>;
+  getRecommendations: (title: string) => Promise<void>;
+  getPersonalRecommendations: () => Promise<void>;
 }
 
 const useBookStore = create(
   devtools<IBookStore>((set) => ({
     isLoading: false,
+    recommendations: [],
+    personalRecommendations: [],
     books: {
       data: [],
       page: 0,
@@ -77,6 +83,30 @@ const useBookStore = create(
         set({ detailBook: data, isLoading: false });
       } catch (error) {
         console.error("Ошибка получения книги:", error);
+        set({ isLoading: false });
+      }
+    },
+
+    getRecommendations: async (title: string) => {
+      set({ isLoading: true });
+      try {
+        const { data } = await instance.get("/recommendations", {
+          params: { title },
+        });
+        set({ recommendations: data, isLoading: false });
+      } catch (error) {
+        console.error("Ошибка получения рекомендаций:", error);
+        set({ isLoading: false });
+      }
+    },
+
+    getPersonalRecommendations: async () => {
+      set({ isLoading: true });
+      try {
+        const { data } = await instance.get("/recommendations/personalized");
+        set({ personalRecommendations: data, isLoading: false });
+      } catch (error) {
+        console.error("Ошибка получения рекомендаций:", error);
         set({ isLoading: false });
       }
     },

@@ -3,6 +3,7 @@ import { devtools } from "zustand/middleware";
 import Cookies from "js-cookie";
 import { instance } from "../services/api-client";
 import { ACCESS_TOKEN, AUTH_REFRESH_TOKEN } from "../constants/cookiesKeys";
+import { isTokenExpired } from "../services/interceptors";
 
 interface LoginParams {
   email: string;
@@ -18,8 +19,10 @@ interface RegisterParams {
 }
 
 export interface IAuthTokens {
-  access: string;
-  refresh: string;
+  access_token: {
+    accessToken: string;
+    refreshToken: string;
+  };
 }
 
 interface IAuthStore {
@@ -29,6 +32,9 @@ interface IAuthStore {
   login: (params: LoginParams, onSuccess: () => void) => Promise<void>;
   register: (params: RegisterParams, onSuccess: () => void) => Promise<void>;
   logout: () => void;
+  clearClient: () => void;
+  initAuth: () => void;
+  isInitialized: boolean;
 }
 
 const useAuthStore = create(
@@ -36,17 +42,33 @@ const useAuthStore = create(
     isLoading: false,
     isAuthorized: false,
     user: null,
+    isInitialized: false,
+    clearClient: () => {
+      set({
+        isLoading: false,
+        isAuthorized: false,
+        user: null,
+      });
+      Cookies.remove(ACCESS_TOKEN);
+      Cookies.remove(AUTH_REFRESH_TOKEN);
+    },
+    initAuth: () => {
+      debugger;
+      const token = Cookies.get(AUTH_REFRESH_TOKEN);
+      const isValid = token && !isTokenExpired(token); // <-- ты уже используешь isTokenExpired
+      set({ isAuthorized: Boolean(isValid), isInitialized: true });
+    },
     login: async (values: LoginParams, onSuccess: () => void) => {
       set({ isLoading: true });
-
+      debugger;
       try {
         const { data } = await instance.post<IAuthTokens>(
           "auth/login/",
           values
         );
 
-        Cookies.set(ACCESS_TOKEN, data.access); // Исправлено: access вместо access_token
-        Cookies.set(AUTH_REFRESH_TOKEN, data.refresh); // Исправлено: refresh вместо refresh_token
+        Cookies.set(ACCESS_TOKEN, data.access_token.accessToken); // Исправлено: access вместо access_token
+        Cookies.set(AUTH_REFRESH_TOKEN, data.access_token.refreshToken); // Исправлено: refresh вместо refresh_token
 
         set({ isLoading: false, isAuthorized: true }); // Устанавливаем авторизацию
 

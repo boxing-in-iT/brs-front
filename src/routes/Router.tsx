@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { PATHNAMES } from "../constants/routes";
 import { HomePage } from "../pages/HomePage";
 // import { AUTH_REFRESH_TOKEN } from "../constants/cookiesKeys";
@@ -10,6 +10,9 @@ import Footer from "../components/Footer";
 import { LoginPage } from "../pages/Login";
 import { BookPage } from "../pages/BookPage";
 import { GetRecommendationsPage } from "../pages/GetRecommendationsPage";
+import { ProfilePage } from "../pages/Profile";
+import { PrivateRoute } from "./PrivateRoute/PrivateRoute";
+import useAuthStore from "../store/auth-store";
 
 const ROUTES = [
   {
@@ -28,11 +31,20 @@ const ROUTES = [
     element: <GetRecommendationsPage />,
     path: `${PATHNAMES.GET_RECOMMENDATIONS}`,
   },
+  {
+    element: <PrivateRoute component={ProfilePage} />,
+    path: `${PATHNAMES.PROFILE}`,
+  },
 ];
 
 const AppRoutes: FC = () => {
   // const refreshToken = Cookies.get(AUTH_REFRESH_TOKEN);
   // const skip = !refreshToken || isTokenExpired(refreshToken);
+  const initAuth = useAuthStore((state) => state.initAuth);
+
+  useEffect(() => {
+    initAuth(); // ← при монтировании проверим токен
+  }, []);
 
   const location = useLocation();
   const authPage = [PATHNAMES.LOGIN];
