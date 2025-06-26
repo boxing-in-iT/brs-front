@@ -53,14 +53,13 @@ const useAuthStore = create(
       Cookies.remove(AUTH_REFRESH_TOKEN);
     },
     initAuth: () => {
-      debugger;
       const token = Cookies.get(AUTH_REFRESH_TOKEN);
       const isValid = token && !isTokenExpired(token); // <-- ты уже используешь isTokenExpired
       set({ isAuthorized: Boolean(isValid), isInitialized: true });
     },
     login: async (values: LoginParams, onSuccess: () => void) => {
       set({ isLoading: true });
-      debugger;
+
       try {
         const { data } = await instance.post<IAuthTokens>(
           "auth/login/",
